@@ -9,29 +9,29 @@
 namespace Weather\Api;
 
 
-use Weather\Model\NullWeather;
-use Weather\Model\Weather;
+use Weather\Model\JsonWeather;
+use Weather\Model\NullJasonWeather;
 
-class WeatherRepository implements DataProvider
+class JsonRepository
 {
 
     /**
      * @param \DateTime $date
-     * @return Weather
      */
-    public function selectByDate(\DateTime $date): Weather
+    public function selectByDate(\DateTime $date)
     {
         $items = $this->selectAll();
-        $result = new NullWeather();
+        $result = new NullJasonWeather();
 
         foreach ($items as $item) {
             if ($item->getDate()->format('Y-m-d') === $date->format('Y-m-d')) {
                 $result = $item;
             }
         }
-
         return $result;
     }
+
+
     public function selectByRange(\DateTime $from, \DateTime $to): array
     {
         $items = $this->selectAll();
@@ -47,21 +47,22 @@ class WeatherRepository implements DataProvider
     }
 
     /**
-     * @return Weather[]
+     * @return JsonWeather[]
      */
     private function selectAll(): array
     {
         $result = [];
         $data = json_decode(
-            file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'Db' . DIRECTORY_SEPARATOR . 'Data.json'),
+            file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'Db' . DIRECTORY_SEPARATOR . 'Weather.json'),
             true
         );
         foreach ($data as $item) {
-            $record = new Weather();
+            $record = new JsonWeather();
             $record->setDate(new \DateTime($item['date']));
-            $record->setDayTemp($item['dayTemp']);
-            $record->setNightTemp($item['nightTemp']);
-            $record->setSky($item['sky']);
+            $record->setDayTemp($item['high']);
+            $record->setNightTemp($item['low']);
+            $record->setJsonSky($item['text']);
+            $record->setDayOfWeek($item['day']);
             $result[] = $record;
         }
 
