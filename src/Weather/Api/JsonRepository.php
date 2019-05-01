@@ -12,6 +12,12 @@ namespace Weather\Api;
 use Weather\Model\JsonWeather;
 use Weather\Model\NullJasonWeather;
 
+/**
+ * Selects data from Weather.json file
+ *
+ * Class JsonRepository
+ * @package Weather\Api
+ */
 class JsonRepository
 {
 

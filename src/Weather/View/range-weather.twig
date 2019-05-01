@@ -5,6 +5,11 @@
         <div class="col-lg-12">
             <div class="wrapper wrapper-content">
                 <div class="row">
+                    <div class="col-sm-10">
+                        <h4>To get different data sources append url with "?src=google" or "?src=json"</h4>
+                    </div>
+                </div>
+                <div class="row">
                 {% for weather in weathers %}
                     {% if loop.index0 % 4 == 0 %}
                         </div>

@@ -16,7 +16,7 @@ class StartPage
             $weather = new NullWeather();
         }
 
-        return ['template' => 'today-weather.twig', 'context' => ['weather' => $weather]];
+        return ['template' => 'today-weather.twig', 'context' => ['weather' => $weather, 'source'=>$src]];
     }
 
     public function getWeekWeather(?string $src): array
@@ -29,6 +29,6 @@ class StartPage
             $weathers = [];
         }
 
-        return ['template' => 'range-weather.twig', 'context' => ['weathers' => $weathers]];
+        return ['template' => 'range-weather.twig', 'context' => ['weathers' => $weathers, 'source'=>$src]];
     }
 }

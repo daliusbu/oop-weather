@@ -4,7 +4,7 @@
             <i class="fa fa-{{ item.getSkySymbol }} fa-5x"></i>
         </div>
         <div class="col-xs-8 text-right">
-            <span>{{ item.getDate|date("Y-m-d") }}</span>
+            <span>{{ item.getDayOfWeek|default('')}}  {{  item.getDate|date("Y-m-d")  }}</span>
             <h2 class="font-bold">{{ item.getDayTemp }}'C</h2>
         </div>
     </div>

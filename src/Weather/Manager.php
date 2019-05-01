@@ -6,7 +6,6 @@ use Weather\Api\DataProvider;
 use Weather\Api\DbRepository;
 use Weather\Api\GoogleApi;
 use Weather\Api\JsonRepository;
-use Weather\Model\Weather;
 
 class Manager
 {
@@ -25,12 +24,11 @@ class Manager
                 return (new GoogleApi())->getToday();
                 break;
             case 'json':
-                return $this->getJsonTransporter()->selectByDate(new \DateTime());
+                return $this->getTransporter($src)->selectByDate(new \DateTime());
                 break;
             default:
-                return $this->getTransporter()->selectByDate(new \DateTime());
+                return $this->getTransporter($src)->selectByDate(new \DateTime());
         }
-
     }
 
     public function getWeekInfo($src): array
@@ -45,28 +43,20 @@ class Manager
                 }
                 return $gWeek;
             case 'json':
-                return $this->getJsonTransporter()->selectByRange(new \DateTime('midnight'), new \DateTime('+6 days midnight'));
+                return $this->getTransporter($src)->selectByRange(new \DateTime('midnight'), new \DateTime('+6 days midnight'));
             default:
-                return $this->getTransporter()->selectByRange(new \DateTime('midnight'), new \DateTime('+6 days midnight'));
+                return $this->getTransporter($src)->selectByRange(new \DateTime('midnight'), new \DateTime('+6 days midnight'));
         }
     }
 
-    private function getTransporter()
+    private function getTransporter(?string $src)
     {
         if (null === $this->transporter) {
-            $this->transporter = new DbRepository();
-        }
-
-        return $this->transporter;
-    }
-
-
-
-
-    private function getJsonTransporter()
-    {
-        if (null === $this->transporter) {
-            $this->transporter = new JsonRepository();
+            if ($src === 'json'){
+                $this->transporter = new JsonRepository();
+            } else{
+                $this->transporter = new DbRepository();
+            }
         }
 
         return $this->transporter;

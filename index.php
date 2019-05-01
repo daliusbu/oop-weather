@@ -18,7 +18,8 @@ $controller = new StartPage();
 $src = $request->get('src');
 $url = strtok($request->getRequestUri(), '?');
 switch ($url) {
-    case '/nfq/oop-weather/index.php/week':
+    case '/week':
+//    case '/nfq/oop-weather/index.php/week':
         $renderInfo = $controller->getWeekWeather($src);
         break;
     case '/':
@@ -26,8 +27,8 @@ switch ($url) {
         $renderInfo = $controller->getTodayWeather($src);
         break;
 }
-//$renderInfo['context']['resources_dir'] = 'src/Weather/Resources';
-$renderInfo['context']['resources_dir'] = '/nfq/oop-weather/src/Weather/Resources/';
+$renderInfo['context']['resources_dir'] = 'src/Weather/Resources';
+//$renderInfo['context']['resources_dir'] = '/nfq/oop-weather/src/Weather/Resources/';
 
 $content = $twig->render($renderInfo['template'], $renderInfo['context']);
 

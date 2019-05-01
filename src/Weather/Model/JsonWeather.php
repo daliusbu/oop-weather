@@ -11,7 +11,6 @@ namespace Weather\Model;
 
 class JsonWeather extends Weather
 {
-
     private $jsonMap = [
         'Cloudy' => 'cloud',
         'Scattered Showers' => 'cloud-rain',
